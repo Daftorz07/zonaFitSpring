@@ -160,21 +160,25 @@ public class ZonaFitApplication implements CommandLineRunner {
                     clienteServicio.guardarCliente(cliente);
 
                     logger.info("Cliente Actualizado: {}", cliente.toString());
+                }else{
+                    logger.info("Cliente no existe");
                 }
             }
             case 5 -> {
                 //Eliminar Clientes
                 logger.info("--- Eliminar Clientes ---");
 
-                //Solicitando los datos del clienteDAO
+                //Solicitando los datos del cliente a eliminar
                 logger.info("Ingrese el ID del cliente a eliminar: ");
                 int userIdCliente = Integer.parseInt(consola.nextLine());
+                Cliente clienteDelete = clienteServicio.buscarClienteId(userIdCliente);
 
-                Cliente clienteDelete = new Cliente();
-                clienteDelete.setId_cliente(userIdCliente);
-
-                clienteServicio.eliminarCliente(clienteDelete);
-                logger.info("Cliente Eliminado");
+                if(clienteDelete != null) {
+                    clienteServicio.eliminarCliente(clienteDelete);
+                    logger.info("Cliente Eliminado");
+                } else {
+                    logger.info("El Cliente no existe");
+                }
             }
             case 6 -> {
                 logger.info("Regresa Pronto!!!");
